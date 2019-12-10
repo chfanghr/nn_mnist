@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cmath>
 #include <random>
+#include <cstdlib>
 
 namespace nn_mnist::utils {
 auto ShowStep(const std::string &name) -> void {

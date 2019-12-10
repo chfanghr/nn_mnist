@@ -6,6 +6,7 @@
 #define NN_MNIST__NETWORK_H_
 
 #include <vector>
+#include <cstdint>
 
 namespace nn_mnist::network {
 class Network {

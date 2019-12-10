@@ -82,7 +82,7 @@ auto main() -> int {
 	// Neural network object initialization.
 	nn_mnist::utils::ShowStep("Initialize neural network");
 
-	auto network = nn_mnist::network::Network(3, {28 * 28, 30, 10});
+	auto network = nn_mnist::network::Network(3, std::vector{28 * 28, 30, 10});
 	network.SetDataset(training_images, training_expected, nn_mnist::kDataSetSize);
 
 	//===============================================================
