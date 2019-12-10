@@ -8,7 +8,7 @@
 #include <cstdlib>
 
 namespace nn_mnist {
-const size_t kDataSetSize = 600;
+const size_t kDataSetSize = 60000;
 const double kAlpha       = 0.75;
 }
 
