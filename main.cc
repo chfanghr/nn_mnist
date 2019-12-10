@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cstdint>
 
 auto main() -> int {
 	//===============================================================
