@@ -78,7 +78,8 @@ auto Network::GetScore(int32_t idx) -> double {
 }
 
 auto Network::Input(const std::vector<double> &in) {
-	std::copy(in.begin(), in.end(), activation_[0].begin());
+	for (size_t i = 0; i < in.size(); i++)
+		activation_[0][i] = in[i];
 }
 
 auto Network::GradientDescent(double alpha, int32_t n) -> void {
@@ -115,14 +116,14 @@ auto Network::GradientDescent(double alpha, int32_t n) -> void {
 			for (int32_t b = 0; b < layer_[2]; b++)
 				derivative_W1[a][b] = (activation_[2][b] - expected_[i][b])
 						* SigmoidPrime(value_[2][b])
-						* activation_[1][0];
+						* activation_[1][a];
 
 		// Bias_1 derivative
 		for (int32_t a = 0; a < layer_[1]; a++) {
 			double       sum{};
 			for (int32_t j = 0; j < layer_[2]; j++)
 				sum += (activation_[2][j] - expected_[i][j])
-						* SigmoidPrime(value_[2][i])
+						* SigmoidPrime(value_[2][j])
 						* weight_[1][a][j]
 						* SigmoidPrime(value_[1][a]);
 			derivative_B1[a] = sum;
@@ -131,7 +132,8 @@ auto Network::GradientDescent(double alpha, int32_t n) -> void {
 		// Weight_0 derivative
 		for (int32_t a = 0; a < layer_[0]; a++) {
 			for (int32_t b = 0; b < layer_[1]; b++) {
-				double       sum{};
+				double sum{};
+
 				for (int32_t j = 0; j < layer_[2]; j++)
 					sum += (activation_[2][j] - expected_[i][j])
 							* SigmoidPrime(value_[2][j])
@@ -197,14 +199,15 @@ auto Network::Evaluate(int32_t n,
 			Info(std::string("Evaluation nr ") + std::to_string(i + 1));
 
 		double  max_A{};
-		int32_t max_A_i;
+		int32_t max_A_i = -1;
 
 		Input(data[i]);
 		FeedForward();
 		for (int32_t j = 0; j < 10; j++) {
-			if (activation_[2][j] > max_A) {}
-			max_A   = activation_[2][j];
-			max_A_i = j;
+			if (activation_[2][j] > max_A) {
+				max_A   = activation_[2][j];
+				max_A_i = j;
+			}
 		}
 
 		if (max_A_i == exp[i])
