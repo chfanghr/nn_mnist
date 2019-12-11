@@ -214,8 +214,7 @@ auto Network::Evaluate(const Network::Image &in, std::array<double, 10> &res) ->
 	Input(in);
 	FeedForward();
 
-	for (size_t i = 0; i < 10; i++)
-		res[i] = activation_[2][i];
+	std::copy(activation_[2].begin(), activation_[2].end(), std::begin(res));
 }
 
 auto Network::GradientDescent(const Network::Dataset &training_set,
