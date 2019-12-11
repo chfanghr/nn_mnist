@@ -154,6 +154,7 @@ auto Network::Train(const Network::Dataset &training_set,
 										const Network::ProgressReporter &progress_reporter,
 										const Network::PostProgressReporter &post_progress_reporter,
 										const Network::Reporter &reporter) -> void {
+	reporter("Size of training dataset is " + std::to_string(training_set.size()));
 	reporter("Start of training");
 	pre_progress_reporter("Training");
 	GradientDescent(training_set, alpha, progress_reporter);
@@ -165,6 +166,7 @@ auto Network::Test(const Network::Dataset &testing_set,
 									 const Network::ProgressReporter &progress_reporter,
 									 const Network::PostProgressReporter &post_progress_reporter,
 									 const Network::Reporter &reporter) -> std::tuple<size_t, size_t, double> {
+	reporter("Size of testing dataset is " + std::to_string(testing_set.size()));
 	reporter("Start of testing");
 
 	int32_t sum{};

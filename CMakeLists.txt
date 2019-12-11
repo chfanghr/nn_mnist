@@ -17,13 +17,13 @@ ADD_LIBRARY(nn_mnist
 			include/nn_mnist/network.h
 			src/nn_mnist/network.cc)
 
-ADD_EXECUTABLE(digit_recognition
+ADD_EXECUTABLE(demo
 			   src/digit_recognition/main.cc
 			   src/digit_recognition/settings.h
 			   src/digit_recognition/utils.h
 			   src/digit_recognition/utils.cc)
 
-TARGET_COMPILE_DEFINITIONS(digit_recognition
+TARGET_COMPILE_DEFINITIONS(demo
 						   PRIVATE MNIST_DATA_LOCATION="${MNIST_DATA_DIR}")
 
-TARGET_LINK_LIBRARIES(digit_recognition nn_mnist)
+TARGET_LINK_LIBRARIES(demo nn_mnist)

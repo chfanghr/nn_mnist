@@ -79,6 +79,8 @@ auto main() -> int {
 
 	network.Test(testing_dataset, ShowProgressStart, ShowProgress, ShowProgressEnd, Info);
 
+	//===============================================================
+	ShowStep("Save network to filesystem");
 	network.SaveTo("network");
 
 	return EXIT_SUCCESS;
