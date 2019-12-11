@@ -13,6 +13,8 @@
 #include <mnist/mnist_reader_less.hpp>
 #endif
 
+#include <iomanip>
+
 auto main() -> int {
 	//===============================================================
 	// Setup.
