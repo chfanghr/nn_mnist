@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <fstream>
 #include <utility>
+#include <iomanip>
 
 namespace nn_mnist {
 const Network::ProgressReporter     Network::default_progress_reporter_      = // NOLINT(cert-err58-cpp)
@@ -73,6 +74,7 @@ auto Network::Init() -> void {
 
 auto Network::Save(std::ostream &os) -> void {
 	std::ostream_iterator<std::string> os_iter(os, " ");
+	os << std::fixed << std::setprecision(10);
 
 	auto serialize_1d_vector = [&](const auto &vec) {
 		std::transform(std::begin(vec),
