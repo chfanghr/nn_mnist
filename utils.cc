@@ -42,6 +42,27 @@ auto Info(const std::string &info) -> void {
 						<< color::Modifier(color::Modifier::Code::FG_DEFAULT);
 }
 
+auto ShowProgressStart(const std::string &name) -> void {
+	std::cout << color::Modifier(color::Modifier::Code::BG_GREEN)
+						<< color::Modifier(color::Modifier::Code::FG_RED)
+						<< "[PROGRESS] " << name << "  0%";
+}
+
+auto ShowProgress(size_t now, size_t all) -> void {
+	int32_t progress     = (double) now / all * 100;
+	auto    progress_str = std::to_string(progress) + "%";
+	while (progress_str.size() < 4)
+		progress_str = " " + progress_str; // NOLINT(performance-inefficient-string-concatenation)
+	std::cout << "\b\b\b\b" << progress_str;
+	std::cout.flush();
+}
+
+auto ShowProgressEnd() -> void {
+	std::cout << color::Modifier(color::Modifier::Code::BG_DEFAULT)
+						<< color::Modifier(color::Modifier::Code::FG_DEFAULT)
+						<< std::endl;
+}
+
 namespace color {
 Modifier::Modifier(Modifier::Code code) : code_(code) {}
 std::ostream &operator<<(std::ostream &os, const Modifier &mod) {

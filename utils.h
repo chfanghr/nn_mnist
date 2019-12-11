@@ -23,6 +23,12 @@ auto PanicIf(bool condition, const std::string &what = "", int exit_value = EXIT
 
 auto Info(const std::string &info) -> void;
 
+auto ShowProgressStart(const std::string &name) -> void;
+
+auto ShowProgress(size_t now, size_t all) -> void;
+
+auto ShowProgressEnd() -> void;
+
 namespace color {
 class Modifier {
  public:

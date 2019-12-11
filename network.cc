@@ -101,6 +101,7 @@ auto Network::GradientDescent(double alpha, int32_t n) -> void {
 	std::for_each(derivative_W1.begin(), derivative_W1.end(),
 								[&](std::vector<double> &vec) { vec.resize(layer_[2]); });
 
+	utils::ShowProgressStart("Training");
 	for (int32_t z = 0; z < n; z++) {
 		int32_t i = z % dataset_size_;
 		Input(dataset_[i]);
@@ -160,9 +161,9 @@ auto Network::GradientDescent(double alpha, int32_t n) -> void {
 			for (int32_t k = 0; k < layer_[1]; k++)
 				weight_[0][j][k] -= alpha * derivative_W0[j][k];
 
-		if (!(z % 100) && z)
-			Info(std::string("Iteration nr ") + std::to_string(z + 1));
+		utils::ShowProgress(z, n);
 	}
+	utils::ShowProgressEnd();
 }
 
 auto Network::Evaluate(int32_t n,
@@ -194,9 +195,9 @@ auto Network::Evaluate(int32_t n,
 	// Calculating net's overall performance on the test dataset
 	int32_t sum{};
 
+	utils::ShowProgressStart("Evaluation");
 	for (int32_t i = 0; i < data.size(); i++) {
-		if ((i % 100) == 0 && i)
-			Info(std::string("Evaluation nr ") + std::to_string(i + 1));
+		utils::ShowProgress(i, data.size());
 
 		double  max_A{};
 		int32_t max_A_i = -1;
@@ -213,7 +214,7 @@ auto Network::Evaluate(int32_t n,
 		if (max_A_i == exp[i])
 			sum++;
 	}
-
+	utils::ShowProgressEnd();
 	double score = (double) sum / data.size();
 	Info(std::string("Scored ") + std::to_string(sum) + " out of " + std::to_string(data.size()));
 	Info(std::string("Rate ") + std::to_string(score * 100) + "%");
