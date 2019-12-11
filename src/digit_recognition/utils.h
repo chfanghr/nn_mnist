@@ -1,16 +1,13 @@
 //
-// Created by 方泓睿 on 2019/12/10.
+// Created by 方泓睿 on 2019/12/12.
 //
 
-#ifndef NN_MNIST__UTILS_H_
-#define NN_MNIST__UTILS_H_
+#ifndef NN_MNIST_SRC_DIGIT_RECOGNITION_UTILS_H_
+#define NN_MNIST_SRC_DIGIT_RECOGNITION_UTILS_H_
 
 #include <string>
 #include <cstdlib>
-#include <exception>
-#include <ostream>
 
-namespace nn_mnist::utils {
 auto ShowStep(const std::string &name) -> void;
 
 __attribute__((noreturn))
@@ -27,7 +24,7 @@ auto ShowProgressStart(const std::string &name) -> void;
 
 auto ShowProgress(size_t now, size_t all) -> void;
 
-auto ShowProgressEnd() -> void;
+auto ShowProgressEnd(const std::string &name) -> void;
 
 namespace color {
 class Modifier {
@@ -52,16 +49,4 @@ class Modifier {
 std::ostream &operator<<(std::ostream &os, const Modifier &mod);
 }
 
-namespace math {
-// Sigmoid function.
-auto Sigmoid(double) -> double;
-
-// Derivative of the sigmoid function.
-auto SigmoidPrime(double) -> double;
-
-// Function returning a random double value in range [fMin, fMax].
-auto Rand(double min, double max) -> double;
-}
-}
-
-#endif //NN_MNIST__UTILS_H_
+#endif //NN_MNIST_SRC_DIGIT_RECOGNITION_UTILS_H_

@@ -9,7 +9,6 @@
 #include <random>
 #include <cstdlib>
 
-namespace nn_mnist::utils {
 auto ShowStep(const std::string &name) -> void {
 	static size_t step = 1;
 	std::cout << color::Modifier(color::Modifier::Code::FG_GREEN)
@@ -57,7 +56,7 @@ auto ShowProgress(size_t now, size_t all) -> void {
 	std::cout.flush();
 }
 
-auto ShowProgressEnd() -> void {
+auto ShowProgressEnd(const std::string &) -> void {
 	std::cout << color::Modifier(color::Modifier::Code::BG_DEFAULT)
 						<< color::Modifier(color::Modifier::Code::FG_DEFAULT)
 						<< std::endl;
@@ -67,23 +66,5 @@ namespace color {
 Modifier::Modifier(Modifier::Code code) : code_(code) {}
 std::ostream &operator<<(std::ostream &os, const Modifier &mod) {
 	return os << "\033[" << (int32_t) mod.code_ << "m";
-}
-}
-
-namespace math {
-auto Sigmoid(double x) -> double {
-	return 1.0 / (1.0 + exp(-x));
-}
-
-auto SigmoidPrime(double x) -> double {
-	return Sigmoid(x) * (1 - Sigmoid(x));
-}
-
-auto Rand(double min, double max) -> double {
-	static std::random_device               rd{};
-	static std::mt19937                     gen(rd());
-	static std::uniform_real_distribution<> dis(min, max);
-	return dis(gen);
-}
 }
 }

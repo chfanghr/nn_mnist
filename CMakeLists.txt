@@ -11,7 +11,19 @@ IF (NOT MNIST_FOUND)
 ENDIF (NOT MNIST_FOUND)
 
 INCLUDE_DIRECTORIES(${MNIST_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(include/)
 
-ADD_EXECUTABLE(digit_recognition main.cc network.h settings.h utils.h utils.cc network.cc)
+ADD_LIBRARY(nn_mnist
+			include/nn_mnist/network.h
+			src/nn_mnist/network.cc)
 
-TARGET_COMPILE_DEFINITIONS(digit_recognition PRIVATE MNIST_DATA_LOCATION="${MNIST_DATA_DIR}")
+ADD_EXECUTABLE(digit_recognition
+			   src/digit_recognition/main.cc
+			   src/digit_recognition/settings.h
+			   src/digit_recognition/utils.h
+			   src/digit_recognition/utils.cc)
+
+TARGET_COMPILE_DEFINITIONS(digit_recognition
+						   PRIVATE MNIST_DATA_LOCATION="${MNIST_DATA_DIR}")
+
+TARGET_LINK_LIBRARIES(digit_recognition nn_mnist)
