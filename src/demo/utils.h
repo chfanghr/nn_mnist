@@ -2,8 +2,8 @@
 // Created by 方泓睿 on 2019/12/12.
 //
 
-#ifndef NN_MNIST_SRC_DIGIT_RECOGNITION_UTILS_H_
-#define NN_MNIST_SRC_DIGIT_RECOGNITION_UTILS_H_
+#ifndef NN_MNIST_SRC_DEMO_UTILS_H_
+#define NN_MNIST_SRC_DEMO_UTILS_H_
 
 #include <string>
 #include <cstdlib>
@@ -49,4 +49,4 @@ class Modifier {
 std::ostream &operator<<(std::ostream &os, const Modifier &mod);
 }
 
-#endif //NN_MNIST_SRC_DIGIT_RECOGNITION_UTILS_H_
+#endif //NN_MNIST_SRC_DEMO_UTILS_H_
