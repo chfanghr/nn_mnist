@@ -74,27 +74,27 @@ auto main() -> int {
 
 	network.Train(training_dataset, kAlpha, ShowProgressStart, ShowProgress, ShowProgressEnd, Info);
 
-	//===============================================================
-	// Test the network
-	ShowStep("Test the network");
+  //===============================================================
+  // Test the network
+  ShowStep("Test the network");
 
-	network.Test(testing_dataset, ShowProgressStart, ShowProgress, ShowProgressEnd, Info);
+  network.Test(testing_dataset, ShowProgressStart, ShowProgress, ShowProgressEnd, Info);
 
-	//===============================================================
-	// Save network to file system
-	ShowStep("Save network to filesystem");
-	network.SaveTo("network");
+  //===============================================================
+  // Save network to file system
+  ShowStep("Save network to filesystem");
+  network.SaveTo("network.dat");
 
-	//===============================================================
-	// Load network from filesystem
-	ShowStep("Load network from filesystem");
-	network.LoadFrom("network");
+  //===============================================================
+  // Load network from filesystem
+  ShowStep("Load network from filesystem");
+  network.LoadFrom("network.dat");
 
-	//===============================================================
-	// Test the network
-	ShowStep("Test the network");
+  //===============================================================
+  // Test the network
+  ShowStep("Test the loaded network");
 
-	network.Test(testing_dataset, ShowProgressStart, ShowProgress, ShowProgressEnd, Info);
+  network.Test(testing_dataset, ShowProgressStart, ShowProgress, ShowProgressEnd, Info);
 
-	return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

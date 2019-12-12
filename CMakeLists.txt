@@ -36,6 +36,9 @@ ADD_EXECUTABLE(digit_recognition_example
 
 TARGET_LINK_LIBRARIES(digit_recognition_example utils nn_mnist)
 
+TARGET_COMPILE_DEFINITIONS(digit_recognition_example
+						   PRIVATE NETWORK_DAT_LOCATION="${CMAKE_SOURCE_DIR}/data/network.dat")
+
 ADD_EXECUTABLE(show_mnist_image
 			   src/show_mnist_image/main.cc)
 
