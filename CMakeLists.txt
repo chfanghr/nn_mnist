@@ -21,23 +21,20 @@ ADD_LIBRARY(utils OBJECT
 			include/utils/utils.h
 			src/utils/utils.cc)
 
-ADD_EXECUTABLE(demo
-			   src/demo/main.cc
-			   src/demo/settings.h
+ADD_EXECUTABLE(trainer
+			   src/trainer/main.cc
+			   src/trainer/settings.h
 			   )
 
-TARGET_COMPILE_DEFINITIONS(demo
+TARGET_COMPILE_DEFINITIONS(trainer
 						   PRIVATE MNIST_DATA_LOCATION="${MNIST_DATA_DIR}")
 
-TARGET_LINK_LIBRARIES(demo utils nn_mnist)
+TARGET_LINK_LIBRARIES(trainer utils nn_mnist)
 
-ADD_EXECUTABLE(digit_recognition
-			   src/digit_recognition/main.cc)
+ADD_EXECUTABLE(digit_recognition_example
+			   src/digit_recognition_example/main.cc)
 
-TARGET_COMPILE_DEFINITIONS(digit_recognition
-						   PRIVATE MNIST_DATA_LOCATION="${MNIST_DATA_DIR}")
-
-TARGET_LINK_LIBRARIES(digit_recognition nn_mnist)
+TARGET_LINK_LIBRARIES(digit_recognition_example utils nn_mnist)
 
 ADD_EXECUTABLE(show_mnist_image
 			   src/show_mnist_image/main.cc)

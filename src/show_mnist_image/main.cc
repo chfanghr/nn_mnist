@@ -13,6 +13,8 @@
 
 #include <iostream>
 
+static bool kShowAsArray = false;
+
 auto ShowImage(const std::vector<uint8_t> &image, int32_t label) -> void;
 
 auto main(int argc, char **argv) -> int {
@@ -30,8 +32,10 @@ auto main(int argc, char **argv) -> int {
 
 	int c{};
 
-	while ((c = getopt(argc, argv, "t:T:")) != -1) {
+	while ((c = getopt(argc, argv, "at:T:")) != -1) {
 		switch (c) {
+			case 'a':kShowAsArray = true;
+				break;
 			case 't': {
 				size_t idx = std::stoul(optarg);
 				if (idx >= mnist_dataset.training_images.size())
@@ -68,10 +72,18 @@ auto ProcessPixel(uint8_t pixel) -> char {
 auto ShowImage(const std::vector<uint8_t> &image, int32_t label) -> void {
 	Info("=====================================");
 	Info("label=" + std::to_string(label));
-	for (size_t i = 0; i < 28; i++) {
-		for (size_t j = 0; j < 28 * 2; j++)
-			std::cout << ProcessPixel(image[28 * i + j / 2]);
-		std::cout << std::endl;
+	if (kShowAsArray) {
+		for (size_t i = 0; i < 28; i++) {
+			for (size_t j = 0; j < 28; j++)
+				std::cout << (double) image[28 * i + j] / 255 << ", ";
+			std::cout << std::endl;
+		}
+	} else {
+		for (size_t i = 0; i < 28; i++) {
+			for (size_t j = 0; j < 28 * 2; j++)
+				std::cout << ProcessPixel(image[28 * i + j / 2]);
+			std::cout << std::endl;
+		}
 	}
 	Info("=====================================");
 }
