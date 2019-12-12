@@ -73,16 +73,11 @@ auto Network::Init() -> void {
 }
 
 auto Network::Save(std::ostream &os) -> void {
-	std::ostream_iterator<std::string> os_iter(os, " ");
 	os << std::fixed << std::setprecision(10);
 
 	auto serialize_1d_vector = [&](const auto &vec) {
-		std::transform(std::begin(vec),
-									 std::end(vec),
-									 os_iter,
-									 [](auto ele) -> std::string {
-										 return std::to_string(ele);
-									 });
+		for (const auto &ele:vec)
+			os << ele << " ";
 		os << std::endl;
 	};
 	auto serialize_2d_vector = [&](const auto &vec_2d) {
