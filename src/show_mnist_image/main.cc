@@ -75,7 +75,7 @@ auto ShowImage(const std::vector<uint8_t> &image, int32_t label) -> void {
 	if (kShowAsArray) {
 		for (size_t i = 0; i < 28; i++) {
 			for (size_t j = 0; j < 28; j++)
-				std::cout << (double) image[28 * i + j] / 255 << ", ";
+				std::cout << (image[28 * i + j] ? '1' : '0') << ", ";
 			std::cout << std::endl;
 		}
 	} else {
