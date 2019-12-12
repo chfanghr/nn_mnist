@@ -125,6 +125,9 @@ auto Network::Load(std::istream &is) -> void {
 	};
 
 	deserialize_1d_vector(layers_);
+
+	Init();
+
 	deserialize_3d_vector(weight_);
 	deserialize_2d_vector(bias_);
 	deserialize_2d_vector(activation_);

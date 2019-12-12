@@ -44,7 +44,7 @@ auto Info(const std::string &info) -> void {
 auto ShowProgressStart(const std::string &name) -> void {
 	std::cout << color::Modifier(color::Modifier::Code::BG_GREEN)
 						<< color::Modifier(color::Modifier::Code::FG_RED)
-						<< "[PROGRESS] " << name << "  0%";
+						<< "[PROGRESS] " << name << "   0%";
 }
 
 auto ShowProgress(size_t now, size_t all) -> void {
