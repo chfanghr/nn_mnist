@@ -40,8 +40,18 @@ nn_mnist::Network::Image img = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
+auto ShowImg() -> void {
+  Info("=====================================");
+  for (size_t i = 0; i < 28; i++) {
+	for (size_t j = 0; j < 28 * 2; j++)
+	  std::cout << (img[28 * i + j / 2] ? 'X' : '#');
+	std::cout << std::endl;
+  }
+}
+
 auto main() -> int {
   Info("There is a big '5' in the original image");
+  ShowImg();
 
   ShowStep(std::string("Loading network from ") + NETWORK_DAT_LOCATION);
   auto network = nn_mnist::Network(NETWORK_DAT_LOCATION);
