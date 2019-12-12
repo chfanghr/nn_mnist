@@ -88,6 +88,7 @@ Module.expectedDataFileDownloads++;
 })();
 
 
+
 // Sometimes an existing Module object exists with properties
 // meant to overwrite the default module functionality. Here
 // we collect those properties and reapply _after_ we configure
@@ -131,9 +132,9 @@ if (Module['ENVIRONMENT']) {
 }
 
 
+
 // `/` should be present at the end if `scriptDirectory` is not empty
 var scriptDirectory = '';
-
 function locateFile(path) {
     if (Module['locateFile']) {
         return Module['locateFile'](path, scriptDirectory);
@@ -383,6 +384,7 @@ var NODEFS = 'NODEFS is no longer included by default; build with -lnodefs.js';
 
 
 // TODO remove when SDL2 is fixed (also see above)
+
 
 
 // Copyright 2017 The Emscripten Authors.  All rights reserved.
@@ -772,6 +774,9 @@ function getValue(ptr, type, noSafe) {
 }
 
 
+
+
+
 // Wasm globals
 
 var wasmMemory;
@@ -965,6 +970,8 @@ function getMemory(size) {
 }
 
 
+
+
 /** @type {function(number, number=)} */
 function Pointer_stringify(ptr, length) {
     abort("this function has been removed - you should use UTF8ToString(ptr, maxBytesToRead) instead!");
@@ -1151,7 +1158,6 @@ function lengthBytesUTF8(str) {
 // a copy of that string as a Javascript String object.
 
 var UTF16Decoder = typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-16le') : undefined;
-
 function UTF16ToString(ptr) {
     assert(ptr % 2 == 0, 'Pointer passed to UTF16ToString must be aligned to two bytes!');
     var endPtr = ptr;
@@ -1342,6 +1348,8 @@ function writeAsciiToMemory(str, buffer, dontAddNull) {
 }
 
 
+
+
 // Memory management
 
 var PAGE_SIZE = 16384;
@@ -1416,6 +1424,10 @@ assert(typeof Int32Array !== 'undefined' && typeof Float64Array !== 'undefined' 
     'JS engine does not provide full typed array support');
 
 
+
+
+
+
 // In standalone mode, the wasm creates the memory, and the user can't provide it.
 // In non-standalone/normal mode, we create the memory here.
 
@@ -1444,6 +1456,8 @@ assert(INITIAL_TOTAL_MEMORY % WASM_PAGE_SIZE === 0);
 updateGlobalBufferAndViews(buffer);
 
 HEAP32[DYNAMICTOP_PTR >> 2] = DYNAMIC_BASE;
+
+
 
 
 // Initializes the stack cookie. Called at the startup of main and at the startup of each thread in pthreads mode.
@@ -1484,6 +1498,7 @@ function abortStackOverflow(allocSize) {
 function abortFnPtrError(ptr, sig) {
     abort("Invalid function pointer " + ptr + " called with signature '" + sig + "'. Perhaps this is an invalid value (e.g. caused by calling a virtual method on a NULL pointer)? Or calling a function with an incorrect type, which will fail? (it is worth building your source files with -Werror (warnings are errors), as warnings can indicate undefined behavior which can cause this). Build with ASSERTIONS=2 for more info.");
 }
+
 
 
 function callRuntimeCallbacks(callbacks) {
@@ -1587,7 +1602,6 @@ function unSign(value, bits, ignore) {
     return bits <= 32 ? 2 * Math.abs(1 << (bits - 1)) + value // Need some trickery, since if bits == 32, we are right at the limit of the bits JS uses in bitshifts
         : Math.pow(2, bits) + value;
 }
-
 function reSign(value, bits, ignore) {
     if (value <= 0) {
         return value;
@@ -1629,6 +1643,7 @@ var Math_min = Math.min;
 var Math_max = Math.max;
 var Math_clz32 = Math.clz32;
 var Math_trunc = Math.trunc;
+
 
 
 // A counter of dependencies for calling run(). If we need to
@@ -1759,6 +1774,8 @@ function isDataURI(filename) {
 }
 
 
+
+
 var wasmBinaryFile = 'wasm_nn_mnist.wasm';
 if (!isDataURI(wasmBinaryFile)) {
     wasmBinaryFile = locateFile(wasmBinaryFile);
@@ -1798,6 +1815,7 @@ function getBinaryPromise() {
         resolve(getBinary());
     });
 }
+
 
 
 // Create the wasm instance.
@@ -2107,7 +2125,6 @@ var PATH_FS = {
             if (start > end) return [];
             return arr.slice(start, end - start + 1);
         }
-
         var fromParts = trim(from.split('/'));
         var toParts = trim(to.split('/'));
         var length = Math.min(fromParts.length, toParts.length);
@@ -6617,7 +6634,6 @@ function run(args) {
     }
     checkStackCookie();
 }
-
 Module['run'] = run;
 
 function checkUnflushedContent() {
