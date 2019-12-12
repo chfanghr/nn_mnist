@@ -47,6 +47,7 @@ auto ShowImg() -> void {
 	  std::cout << (img[28 * i + j / 2] ? 'X' : '#');
 	std::cout << std::endl;
   }
+  Info("=====================================");
 }
 
 auto main() -> int {
