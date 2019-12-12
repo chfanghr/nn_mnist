@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Digit recognition</title>
+</head>
+<body>
+<script async="" src="wasm_nn_mnist.js" type="text/javascript"></script>
+<button id="clearButton">Clear</button>
+<br>
+<canvas height="280" id="canvas" style="background-color: #fbffca" width="280"></canvas>
+<p><label for="resultBox">This is </label><input id="resultBox" maxlength="2"
+                                                 readonly="readonly"
+                                                 size="2" type="text"/></p>
+
+<script>
+    "use strict";
+    let canvas = document.getElementById("canvas");
+    let clear_button = document.getElementById("clearButton");
+    let result_box = document.getElementById("resultBox");
+
+    let ctx = canvas.getContext('2d');
+
+    function Position(x, y) {
+        return {
+            x: x ? parseInt(x) : 0,
+            y: y ? parseInt(y) : 0,
+            sub: function (another) {
+                if (another.constructor === Position)
+                    return Position(
+                        this.x - another.x,
+                        this.y - another.y
+                    );
+                else
+                    return Position();
+            },
+            add: function (another) {
+                if (another.constructor === Position)
+                    return Position(
+                        this.x + another.x,
+                        this.y + another.y
+                    );
+                else
+                    return Position();
+            }
+        };
+    }
+
+    function GetCanvasPos() {
+        return new Position(canvas.offsetLeft, canvas.offsetTop);
+    }
+
+    function GetMousePosition(evt) {
+        const canvasPos = GetCanvasPos();
+        return new Position(
+            evt.clientX - canvasPos.x,
+            evt.clientY - canvasPos.y
+        );
+    }
+
+    let last_pos = Position(0, 0);
+
+    function SetLastPosition(evt) {
+        last_pos = GetMousePosition(evt);
+    }
+
+    function Draw(e) {
+        // mouse left button must be pressed
+        if (e.buttons !== 1) return;
+
+        ctx.beginPath(); // begin
+
+        ctx.lineWidth = 9;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#fffff';
+
+        ctx.moveTo(last_pos.x, last_pos.y); // from
+        SetLastPosition(e);
+        ctx.lineTo(last_pos.x, last_pos.y); // to
+
+        ctx.stroke(); // draw it!
+    }
+
+    function ScaleImage() {
+        let canvas_tmp = document.createElement("canvas");
+        canvas_tmp.width = canvas_tmp.height = 28;
+        let context_tmp = canvas_tmp.getContext('2d');
+        // noinspection JSCheckFunctionSignatures
+        context_tmp.drawImage(canvas, 0, 0, 28, 28);
+        return context_tmp.getImageData(0, 0, 28, 28);
+    }
+
+    function ToGreyScale(img) {
+        let res = new Float64Array(28 * 28);
+        for (let i = 0; i < img.height * img.width * 4; i += 4)
+            res[i / 4] = (img.data[i + 3]);
+        return res;
+    }
+
+    function EvaluateImage(evt) {
+        console.log("mouse up");
+        let grey_scale_img = ToGreyScale(ScaleImage());
+        if (Module) {
+            Module._Clear();
+            for (let i in grey_scale_img) { // noinspection JSUnfilteredForInLoop
+                Module._SetData(i, grey_scale_img[i]);
+            }
+            result_box.value = Module._Evaluate();
+            // Module._ShowImg();
+            Module._Clear();
+        }
+    }
+
+    canvas.addEventListener('mousemove', Draw, false);
+    canvas.addEventListener('mousedown', SetLastPosition, false);
+    canvas.addEventListener('mouseenter', SetLastPosition, false);
+    canvas.addEventListener('mouseup', EvaluateImage, false);
+
+    clear_button.onclick = function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        result_box.value = -1;
+    };
+
+    result_box.value = -1;
+</script>
+</body>
+</html>

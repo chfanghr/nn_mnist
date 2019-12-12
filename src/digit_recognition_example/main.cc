@@ -9,7 +9,7 @@
 #define NETWORK_DAT_LOCATION "data/network.dat"
 #endif
 
-nn_mnist::Network::Image img = {
+nn_mnist::Network::Image kImg = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -44,7 +44,7 @@ auto ShowImg() -> void {
   Info("=====================================");
   for (size_t i = 0; i < 28; i++) {
 	for (size_t j = 0; j < 28 * 2; j++)
-	  std::cout << (img[28 * i + j / 2] ? 'X' : ' ');
+	  std::cout << (kImg[28 * i + j / 2] ? 'X' : ' ');
 	std::cout << std::endl;
   }
   Info("=====================================");
@@ -58,7 +58,7 @@ auto main() -> int {
   auto network = nn_mnist::Network(NETWORK_DAT_LOCATION);
 
   ShowStep("Evaluate the image");
-  auto res = network.Evaluate(img);
+  auto res = network.Evaluate(kImg);
 
   int max_idx = -1;
   double max{};
