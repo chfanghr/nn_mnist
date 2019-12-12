@@ -44,7 +44,7 @@ auto ShowImg() -> void {
   Info("=====================================");
   for (size_t i = 0; i < 28; i++) {
 	for (size_t j = 0; j < 28 * 2; j++)
-	  std::cout << (img[28 * i + j / 2] ? 'X' : '#');
+	  std::cout << (img[28 * i + j / 2] ? 'X' : ' ');
 	std::cout << std::endl;
   }
   Info("=====================================");
