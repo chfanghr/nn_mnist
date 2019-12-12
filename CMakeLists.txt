@@ -17,13 +17,32 @@ ADD_LIBRARY(nn_mnist
 			include/nn_mnist/network.h
 			src/nn_mnist/network.cc)
 
+ADD_LIBRARY(utils OBJECT
+			include/utils/utils.h
+			src/utils/utils.cc)
+
 ADD_EXECUTABLE(demo
 			   src/demo/main.cc
 			   src/demo/settings.h
-			   src/demo/utils.h
-			   src/demo/utils.cc)
+			   )
 
 TARGET_COMPILE_DEFINITIONS(demo
 						   PRIVATE MNIST_DATA_LOCATION="${MNIST_DATA_DIR}")
 
-TARGET_LINK_LIBRARIES(demo nn_mnist)
+TARGET_LINK_LIBRARIES(demo utils nn_mnist)
+
+ADD_EXECUTABLE(digit_recognition
+			   src/digit_recognition/main.cc)
+
+TARGET_COMPILE_DEFINITIONS(digit_recognition
+						   PRIVATE MNIST_DATA_LOCATION="${MNIST_DATA_DIR}")
+
+TARGET_LINK_LIBRARIES(digit_recognition nn_mnist)
+
+ADD_EXECUTABLE(show_mnist_image
+			   src/show_mnist_image/main.cc)
+
+TARGET_COMPILE_DEFINITIONS(show_mnist_image
+						   PRIVATE MNIST_DATA_LOCATION="${MNIST_DATA_DIR}")
+
+TARGET_LINK_LIBRARIES(show_mnist_image utils nn_mnist)

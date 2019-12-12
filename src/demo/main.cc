@@ -2,7 +2,7 @@
 // Created by 方泓睿 on 2019/12/10.
 //
 
-#include "utils.h"
+#include "utils/utils.h"
 #include "settings.h"
 
 #include <nn_mnist/network.h>
