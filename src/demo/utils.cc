@@ -57,6 +57,7 @@ auto ShowProgress(size_t now, size_t all) -> void {
 }
 
 auto ShowProgressEnd(const std::string &) -> void {
+	ShowProgress(1, 1);
 	std::cout << color::Modifier(color::Modifier::Code::BG_DEFAULT)
 						<< color::Modifier(color::Modifier::Code::FG_DEFAULT)
 						<< std::endl;
